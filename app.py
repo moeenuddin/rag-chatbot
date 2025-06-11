@@ -6,6 +6,7 @@ from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
 from transformers import pipeline
 import tempfile
+import os
 
 st.title("📚 RAG Chatbot")
 
