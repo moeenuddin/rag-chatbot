@@ -10,20 +10,24 @@ import tempfile
 st.title("📚 RAG Chatbot")
 
 
-# Sample text files (You can replace content with actual samples)
-sample_files = {
-    "Sample 1: Pride and Prejudice": "It is a truth universally acknowledged, that a single man in possession of a good fortune...",
-    "Sample 2: Sherlock Holmes": "To Sherlock Holmes she is always the woman. I have seldom heard him mention her under any other name...",
-    "Sample 3: thirty days of us": "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness..."
-}
-
 st.subheader("📄 Download a Sample File (or Upload Your Own)")
 
-# Show download buttons
-for filename, content in sample_files.items():
-    st.download_button(label=f"⬇️ {filename}", data=content, file_name=f"{filename.replace(':', '').replace(' ', '_')}.txt")
+books_dir = "books"
+if not os.path.exists(books_dir):
+    st.error("❌ 'books/' directory not found. Please make sure it exists and contains .txt files.")
+else:
+    # List .txt files in books directory
+    txt_files = [f for f in os.listdir(books_dir) if f.endswith(".txt")]
 
-
+    if txt_files:
+        for file in txt_files:
+            file_path = os.path.join(books_dir, file)
+            with open(file_path, "r", encoding="utf-8") as f:
+                content = f.read()
+                st.download_button(label=f"⬇️ Download {file}", data=content, file_name=file)
+    else:
+        st.info("No .txt files found in the 'books/' directory.")
+        
 uploaded_file = st.file_uploader("Upload a .txt file", type="txt")
 
 if uploaded_file:
