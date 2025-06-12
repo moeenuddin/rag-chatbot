@@ -49,7 +49,7 @@ if uploaded_file:
     query = st.text_input("Ask a question based on the document")
 
     if query:
-        docs_relevant = vectorstore.similarity_search(query, k=2)
+        docs_relevant = vectorstore.similarity_search(query, k=10)
         context = " ".join([doc.page_content for doc in docs_relevant])
         prompt = f"Answer the question based on the context:\n\nContext: {context}\n\nQuestion: {query}"
         response = generator(prompt, max_new_tokens=200)[0]["generated_text"]
