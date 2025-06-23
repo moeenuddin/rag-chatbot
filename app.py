@@ -44,7 +44,8 @@ if uploaded_file:
     embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     vectorstore = FAISS.from_documents(docs_split, embedding_model)
 
-    generator = pipeline("text2text-generation", model="google/flan-t5-small")
+    #generator = pipeline("text2text-generation", model="google/flan-t5-small")
+    generator = pipeline("text-generation", model="microsoft/phi-4")
 
     query = st.text_input("Ask a question based on the document")
 
